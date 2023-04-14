@@ -14,42 +14,44 @@ LangCorn is an API server that enables you to serve LangChain models and pipelin
 ## Installation
 
 To get started with LangCorn, simply install the package using pip:
-```bash
+```shell
 
 pip install langcorn
 ```
 ## Quick Start
+
+Run your LangCorn FastAPI server:
+
+```shell
+langcorn server examples.ex1:chain examples.ex2:chain
+```
+
+or as an alternative
+```shell
+python -m langcorn server examples.ex1:chain examples.ex2:chain
+```
 
 Import the necessary packages and create your FastAPI app:
 
 ```python
 
 from fastapi import FastAPI
-from langcorn import LangCorn
+from langcorn import create_service
 
-app = FastAPI()
-langcorn = LangCorn()
+app:FastAPI = create_service("examples.ex1:chain")
 ```
-Load your LangChain models and pipelines:
 
+Multiple chains
 ```python
 
-langcorn.load_model("model_name", "path/to/model")
-langcorn.load_pipeline("pipeline_name", "path/to/pipeline")
+from fastapi import FastAPI
+from langcorn import create_service
+
+app:FastAPI = create_service("examples.ex2:chain", "examples.ex1:chain")
 ```
-Define the API endpoints for your LangChain tasks:
-
-```python
-
-@app.post("/process_text")
-async def process_text(text: str):
-    result = await langcorn.run_pipeline("pipeline_name", text)
-    return {"result": result}
-```
-
 
 Run your LangCorn FastAPI server:
-```bash
+```shell
 
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
