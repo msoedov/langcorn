@@ -1,4 +1,5 @@
 import asyncio
+import os
 import random
 import sys
 import time
@@ -8,7 +9,6 @@ from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse
 from loguru import logger
 from pydantic import BaseModel
-
 from uvicorn.importer import import_from_string
 
 logger.remove(0)
@@ -28,6 +28,8 @@ class LangResponse(BaseModel):
 
 
 def create_service(*lc_apps):
+    # Make local modules discoverable
+    sys.path.append(os.path.dirname(__file__))
     app = FastAPI()
     for lc in lc_apps:
         lca = import_from_string(lc)
