@@ -2,7 +2,6 @@
 
 LangCorn is an API server that enables you to serve LangChain models and pipelines with ease, leveraging the power of FastAPI for a robust and efficient experience.
 
-
 <p>
 <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/msoedov/langcorn" />
 <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/msoedov/langcorn" />
@@ -25,13 +24,16 @@ LangCorn is an API server that enables you to serve LangChain models and pipelin
 ## 📦 Installation
 
 To get started with LangCorn, simply install the package using pip:
+
 ```shell
 
 pip install langcorn
 ```
+
 ## ⛓️ Quick Start
 
 Example LLM chain ex1.py
+
 ```python
 
 import os
@@ -51,11 +53,13 @@ langcorn server examples.ex1:chain
 ```
 
 or as an alternative
+
 ```shell
 python -m langcorn server examples.ex1:chain
 ```
 
 Run multiple chains
+
 ```shell
 python -m langcorn server examples.ex1:chain examples.ex2:chain
 ```
@@ -71,6 +75,7 @@ app:FastAPI = create_service("examples.ex1:chain")
 ```
 
 Multiple chains
+
 ```python
 
 from fastapi import FastAPI
@@ -80,14 +85,16 @@ app:FastAPI = create_service("examples.ex2:chain", "examples.ex1:chain")
 ```
 
 Run your LangCorn FastAPI server:
+
 ```shell
 
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
+
 Now, your LangChain models and pipelines are accessible via the LangCorn API server.
 
-
 ## Auth
+
 It possible to add a static api token auth by specifying `auth_token`
 
 ```shell
@@ -99,6 +106,7 @@ or
 ```python
 app:FastAPI = create_service("examples.ex1:chain", auth_token="api-secret-value")
 ```
+
 ## Documentation
 
 For more detailed information on how to use LangCorn, including advanced features and customization options, please refer to the official documentation.
@@ -114,6 +122,7 @@ Contributions to LangCorn are welcome! If you'd like to contribute, please follo
 - Open a pull request to the main LangCorn repository
 
 Before contributing, please read the contributing guidelines.
+
 ## License
 
 LangCorn is released under the MIT License.

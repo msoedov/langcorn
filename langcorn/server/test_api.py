@@ -1,13 +1,7 @@
-import numpy as np
 import pytest
 from fastapi.testclient import TestClient
-from loguru import logger
 
 from .api import create_service
-
-
-FN_PORT = 7172
-
 
 client = TestClient(create_service("examples.ex1:chain"))
 

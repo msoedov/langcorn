@@ -1,12 +1,7 @@
-import asyncio
 import os
-import random
 import sys
-import time
-from collections import defaultdict
 
-from fastapi import Depends, FastAPI, File, HTTPException, Request, Header
-from fastapi.responses import FileResponse
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.security.utils import get_authorization_scheme_param
 from loguru import logger
 from pydantic import BaseModel
