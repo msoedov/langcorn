@@ -18,7 +18,7 @@ include = ["server*"]
 langcorn = "langcorn.__main__:entrypoint"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 fastapi = "^0.92.0"
 uvicorn = "^0.20.0"
 langchain = "^0.0.131"
