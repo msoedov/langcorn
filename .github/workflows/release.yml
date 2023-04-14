@@ -1,13 +1,13 @@
 name: release
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    # Sequence of patterns matched against refs/heads
     branches:
       - main
-    paths:
-      - "pyproject.toml"
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 0.*
 
 env:
   POETRY_VERSION: "1.4.0"
@@ -15,8 +15,7 @@ env:
 jobs:
   if_release:
     if: |
-      ${{ github.event.pull_request.merged == true }}
-      && ${{ contains(github.event.pull_request.labels.*.name, 'Release') }}
+        true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
