@@ -30,13 +30,31 @@ pip install langcorn
 ```
 ## ⛓️ Quick Start
 
+Example LLM chain ex1.py
+```python
+
+import os
+
+from langchain import LLMMathChain, OpenAI
+
+os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY", "sk-********")
+
+llm = OpenAI(temperature=0)
+chain = LLMMathChain(llm=llm, verbose=True)
+```
+
 Run your LangCorn FastAPI server:
 
 ```shell
-langcorn server examples.ex1:chain examples.ex2:chain
+langcorn server examples.ex1:chain
 ```
 
 or as an alternative
+```shell
+python -m langcorn server examples.ex1:chain
+```
+
+Run multiple chains
 ```shell
 python -m langcorn server examples.ex1:chain examples.ex2:chain
 ```

@@ -35,4 +35,4 @@ jobs:
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
         run: |
-          poetry publish
+          poetry publish --skip-existing

@@ -1,19 +1,22 @@
 
+default_language_version:
+        python: python3
+
 repos:
 
-  - repo: https://github.com/omnilib/ufmt
-    rev: v2.0.0
-    hooks:
-      - id: ufmt
-        additional_dependencies:
-          - black == 22.6.0
-          - usort == 1.0.4
+  # - repo: https://github.com/omnilib/ufmt
+  #   rev: v2.1.0
+  #   hooks:
+  #     - id: ufmt
+  #       additional_dependencies:
+  #         - black == 22.6.0
+  #         - usort == 1.0.4
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.31.1
     hooks:
       - id: pyupgrade
-        args: [--py39-plus]
+        args: [--py310-plus]
 
   - repo: https://github.com/myint/docformatter
     rev: v1.4

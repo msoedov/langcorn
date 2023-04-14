@@ -32,4 +32,5 @@ review_chain = LLMChain(llm=llm, prompt=review_prompt_template)
 
 chain = SimpleSequentialChain(chains=[synopsis_chain, review_chain], verbose=True)
 
-# review = chain.run("Tragedy at sunset on the beach")
+if __name__ == "__main__":
+    review = chain.run("Tragedy at sunset on the beach")
