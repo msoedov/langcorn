@@ -2,6 +2,16 @@
 
 LangCorn is an API server that enables you to serve LangChain models and pipelines with ease, leveraging the power of FastAPI for a robust and efficient experience.
 
+
+<p>
+<img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/msoedov/langcorn" />
+<img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/msoedov/langcorn" />
+<img alt="" src="https://img.shields.io/github/repo-size/msoedov/langcorn" />
+<img alt="GitHub Issues" src="https://img.shields.io/github/issues/msoedov/langcorn" />
+<img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/msoedov/langcorn" />
+<img alt="Github License" src="https://img.shields.io/github/license/msoedov/langcorn" />
+</p>
+
 ## Features
 
 - Easy deployment of LangChain models and pipelines
@@ -11,14 +21,14 @@ LangCorn is an API server that enables you to serve LangChain models and pipelin
 - Well-documented RESTful API endpoints
 - Asynchronous processing for faster response times
 
-## Installation
+## 📦 Installation
 
 To get started with LangCorn, simply install the package using pip:
 ```shell
 
 pip install langcorn
 ```
-## Quick Start
+## ⛓️ Quick Start
 
 Run your LangCorn FastAPI server:
 
@@ -60,7 +70,7 @@ Now, your LangChain models and pipelines are accessible via the LangCorn API ser
 
 For more detailed information on how to use LangCorn, including advanced features and customization options, please refer to the official documentation.
 
-## Contributing
+## 👋 Contributing
 
 Contributions to LangCorn are welcome! If you'd like to contribute, please follow these steps:
 
