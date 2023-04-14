@@ -15,6 +15,7 @@ LangCorn is an API server that enables you to serve LangChain models and pipelin
 ## Features
 
 - Easy deployment of LangChain models and pipelines
+- Ready to use auth functionality
 - High-performance FastAPI framework for serving requests
 - Scalable and robust solution for language processing applications
 - Supports custom pipelines and processing

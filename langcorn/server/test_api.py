@@ -3,7 +3,6 @@ import pytest
 from fastapi.testclient import TestClient
 from loguru import logger
 
-g
 from .api import create_service
 
 
