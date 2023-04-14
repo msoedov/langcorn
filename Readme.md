@@ -84,6 +84,20 @@ Run your LangCorn FastAPI server:
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 Now, your LangChain models and pipelines are accessible via the LangCorn API server.
+
+
+## Auth
+It possible to add a static api token auth by specifying `auth_token`
+
+```shell
+python langcorn server examples.ex1:chain examples.ex2:chain --auth_token=api-secret-value
+```
+
+or
+
+```python
+app:FastAPI = create_service("examples.ex1:chain", auth_token="api-secret-value")
+```
 ## Documentation
 
 For more detailed information on how to use LangCorn, including advanced features and customization options, please refer to the official documentation.

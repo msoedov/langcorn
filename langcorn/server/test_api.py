@@ -3,8 +3,7 @@ import pytest
 from fastapi.testclient import TestClient
 from loguru import logger
 
-# from mirakuru import AlreadyRunning, TCPExecutor
-
+g
 from .api import create_service
 
 
@@ -27,7 +26,7 @@ class TestRoutes:
         assert response.status_code == 404
 
     def test_state(self):
-        response = client.get("/state")
+        response = client.get("/ht")
         assert response.status_code == 200
         assert response.json()
 
