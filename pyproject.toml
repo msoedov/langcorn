@@ -8,8 +8,8 @@ maintainers = [
 ]
 repository = "https://github.com/msoedov/langcorn"
 license = "MIT"
-readme = "README.md"
-keywords = ["nlp", "langchain", "openai", "gpt", "gui"]
+readme = "Readme.md"
+keywords = ["nlp", "langchain", "openai", "gpt", "fastapi"]
 packages = [{ include = "langcorn", from = "." }]
 include = ["server*"]
 
