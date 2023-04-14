@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "langcorn"
-version = "0.0.1"
+version = "0.0.2"
 description = "A Python package creating rest api interface for LangChain"
 authors = ["Alexander Miasoiedov <msoedov@gmail.com>"]
 maintainers = [
@@ -11,7 +11,6 @@ license = "MIT"
 readme = "Readme.md"
 keywords = ["nlp", "langchain", "openai", "gpt", "fastapi"]
 packages = [{ include = "langcorn", from = "." }]
-include = ["server*"]
 
 
 [tool.poetry.scripts]

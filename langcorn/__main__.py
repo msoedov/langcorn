@@ -1,7 +1,7 @@
 import sys
 import fire
 import uvicorn
-from server import api
+from langcorn.server import api
 
 
 class T:

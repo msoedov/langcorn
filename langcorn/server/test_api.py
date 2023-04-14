@@ -5,7 +5,7 @@ from loguru import logger
 
 # from mirakuru import AlreadyRunning, TCPExecutor
 
-from server.api import create_service
+from .api import create_service
 
 
 FN_PORT = 7172
