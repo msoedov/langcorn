@@ -1,4 +1,4 @@
-# Langcorn: LangChain api server
+# Langcorn
 
 LangCorn is an API server that enables you to serve LangChain models and pipelines with ease, leveraging the power of FastAPI for a robust and efficient experience.
 
