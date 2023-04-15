@@ -70,7 +70,7 @@ def create_service(*lc_apps, auth_token: str = ""):
         ):
             output = chain.run(request.prompt)
             # add error handling
-            return LangResponse(output=output)
+            return LangResponse(output=output, error="")
 
     @app.get("/ht")
     async def health_check():
