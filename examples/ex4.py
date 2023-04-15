@@ -1,9 +1,7 @@
 import os
-from typing import Dict
 
 from langchain import OpenAI, PromptTemplate
 from langchain.chains import LLMChain, LLMRequestsChain, SequentialChain
-from langchain.prompts import PromptTemplate
 
 os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY", "sk-********")
 
@@ -14,7 +12,7 @@ class RequestsChain(LLMRequestsChain):
     llm_chain: LLMChain = None
     requests_key: str = None
 
-    def _call(self, inputs: Dict[str, str]) -> Dict[str, str]:
+    def _call(self, inputs: dict[str, str]) -> dict[str, str]:
         from bs4 import BeautifulSoup
 
         url = inputs[self.input_key]
