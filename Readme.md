@@ -50,18 +50,37 @@ Run your LangCorn FastAPI server:
 
 ```shell
 langcorn server examples.ex1:chain
+
+
+[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /docs
+[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /examples.ex1/run
+INFO:     Started server process [87033]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8718 (Press CTRL+C to quit)
 ```
 
 or as an alternative
 
 ```shell
 python -m langcorn server examples.ex1:chain
+
 ```
 
 Run multiple chains
 
 ```shell
 python -m langcorn server examples.ex1:chain examples.ex2:chain
+
+
+
+[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /docs
+[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /examples.ex1/run
+[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /examples.ex2/run
+INFO:     Started server process [87033]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8718 (Press CTRL+C to quit)
 ```
 
 Import the necessary packages and create your FastAPI app:
