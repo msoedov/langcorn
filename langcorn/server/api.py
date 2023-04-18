@@ -44,6 +44,31 @@ def authenticate_or_401(auth_token):
     return verify_auth
 
 
+def derive_fields(language_app) -> (list[str], list[str]):
+    if hasattr(language_app, "input_variables"):
+        return language_app.input_variables, language_app.output_variables
+    elif hasattr(language_app, "prompt"):
+        return language_app.prompt.input_variables, [language_app.output_key]
+    return [language_app.input_key], ["output"]
+
+
+def derive_class(name, fields):
+    return type(
+        f"Lang{name}", (BaseModel,), {"__annotations__": {f: str for f in fields}}
+    )
+
+
+def make_handler(request_cls, chain):
+    async def handler(
+        request: request_cls,
+    ):
+        output = chain.run(request.dict())
+        # add error handling
+        return LangResponse(output=output, error="")
+
+    return handler
+
+
 def create_service(*lc_apps, auth_token: str = ""):
     # Make local modules discoverable
     sys.path.append(os.path.dirname(__file__))
@@ -57,20 +82,21 @@ def create_service(*lc_apps, auth_token: str = ""):
         chain = import_from_string(lang_app)
         logger.info(f"{lang_app=}")
         logger.info(f"{chain=}")
+        inn, out = derive_fields(chain)
+        logger.info(f"{inn=}")
         endpoint_prefix = lang_app.split(":")[0]
-        endpoints.append(f"/{endpoint_prefix}/run")
+        cls_name = "".join([c.capitalize() for c in endpoint_prefix.split(".")])
+        request_cls = derive_class(cls_name, inn)
+        logger.info(f"{request_cls=}")
 
-        @app.post(
+        endpoints.append(f"/{endpoint_prefix}/run")
+        # avoid hoisting issues with handler(request)
+        app.post(
             f"/{endpoint_prefix}/run",
             response_model=LangResponse,
             dependencies=[_authenticate_or_401],
-        )
-        async def predict_sync(
-            request: LangRequest,
-        ):
-            output = chain.run(request.prompt)
-            # add error handling
-            return LangResponse(output=output, error="")
+            name=lang_app,
+        )(make_handler(request_cls, chain))
 
     @app.get("/ht")
     async def health_check():
