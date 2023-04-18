@@ -80,14 +80,13 @@ def create_service(*lc_apps, auth_token: str = ""):
 
     for lang_app in lc_apps:
         chain = import_from_string(lang_app)
-        logger.info(f"{lang_app=}")
-        logger.info(f"{chain=}")
         inn, out = derive_fields(chain)
-        logger.info(f"{inn=}")
+        logger.debug(f"inputs:{inn=}")
+        logger.info(f"{lang_app=}:{chain.__class__.__name__}({inn})")
         endpoint_prefix = lang_app.split(":")[0]
         cls_name = "".join([c.capitalize() for c in endpoint_prefix.split(".")])
         request_cls = derive_class(cls_name, inn)
-        logger.info(f"{request_cls=}")
+        logger.debug(f"{request_cls=}")
 
         endpoints.append(f"/{endpoint_prefix}/run")
         # avoid hoisting issues with handler(request)

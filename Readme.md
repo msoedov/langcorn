@@ -52,9 +52,12 @@ Run your LangCorn FastAPI server:
 langcorn server examples.ex1:chain
 
 
-[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /docs
-[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /examples.ex1/run
-INFO:     Started server process [87033]
+[INFO] 2023-04-18 14:34:56.32 | api:create_service:75 | Creating service
+[INFO] 2023-04-18 14:34:57.51 | api:create_service:85 | lang_app='examples.ex1:chain':LLMChain(['product'])
+[INFO] 2023-04-18 14:34:57.51 | api:create_service:104 | Serving
+[INFO] 2023-04-18 14:34:57.51 | api:create_service:106 | Endpoint: /docs
+[INFO] 2023-04-18 14:34:57.51 | api:create_service:106 | Endpoint: /examples.ex1/run
+INFO:     Started server process [27843]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:8718 (Press CTRL+C to quit)
@@ -73,11 +76,14 @@ Run multiple chains
 python -m langcorn server examples.ex1:chain examples.ex2:chain
 
 
-
-[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /docs
-[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /examples.ex1/run
-[INFO] 2023-04-14 23:28:57.52 | api:create_service:81 | Endpoint: /examples.ex2/run
-INFO:     Started server process [87033]
+[INFO] 2023-04-18 14:35:21.11 | api:create_service:75 | Creating service
+[INFO] 2023-04-18 14:35:21.82 | api:create_service:85 | lang_app='examples.ex1:chain':LLMChain(['product'])
+[INFO] 2023-04-18 14:35:21.82 | api:create_service:85 | lang_app='examples.ex2:chain':SimpleSequentialChain(['input'])
+[INFO] 2023-04-18 14:35:21.82 | api:create_service:104 | Serving
+[INFO] 2023-04-18 14:35:21.82 | api:create_service:106 | Endpoint: /docs
+[INFO] 2023-04-18 14:35:21.82 | api:create_service:106 | Endpoint: /examples.ex1/run
+[INFO] 2023-04-18 14:35:21.82 | api:create_service:106 | Endpoint: /examples.ex2/run
+INFO:     Started server process [27863]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:8718 (Press CTRL+C to quit)
@@ -111,6 +117,11 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 Now, your LangChain models and pipelines are accessible via the LangCorn API server.
+
+## Docs
+
+Automatically served FastAPI doc
+![](https://res.cloudinary.com/dq0w2rtm9/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1681817836/Screen_Shot_2023-04-18_at_14.36.00_ms2thb.jpg?_s=public-apps)
 
 ## Auth
 
