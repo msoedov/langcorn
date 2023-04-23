@@ -69,11 +69,11 @@ def make_handler(request_cls, chain):
     return handler
 
 
-def create_service(*lc_apps, auth_token: str = ""):
+def create_service(*lc_apps, auth_token: str = "", app: FastAPI = None):
     # Make local modules discoverable
     sys.path.append(os.path.dirname(__file__))
     logger.info("Creating service")
-    app = FastAPI()
+    app = app or FastAPI()
     endpoints = ["/docs"]
 
     _authenticate_or_401 = Depends(authenticate_or_401(auth_token=auth_token))
