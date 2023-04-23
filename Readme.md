@@ -121,7 +121,10 @@ Now, your LangChain models and pipelines are accessible via the LangCorn API ser
 ## Docs
 
 Automatically served FastAPI doc
+[Live example](https://langcorn-ift9ub8zg-msoedov.vercel.app/docs#/) hosted on vercel.
+
 ![](https://res.cloudinary.com/dq0w2rtm9/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1681817836/Screen_Shot_2023-04-18_at_14.36.00_ms2thb.jpg?_s=public-apps)
+
 
 ## Auth
 
