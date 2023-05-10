@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "langcorn"
-version = "0.0.6"
+version = "0.0.7"
 description = "A Python package creating rest api interface for LangChain"
 authors = ["Alexander Miasoiedov <msoedov@gmail.com>"]
 maintainers = [
