@@ -1,8 +1,9 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from .api import create_service
 from examples import app
+
+from .api import create_service
 
 client = TestClient(create_service("examples.ex1:chain"))
 
