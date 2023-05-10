@@ -110,6 +110,7 @@ app:FastAPI = create_service("examples.ex2:chain", "examples.ex1:chain")
 ```
 
 or
+
 ```python
 from fastapi import FastAPI
 from langcorn import create_service
@@ -141,7 +142,6 @@ Automatically served FastAPI doc
 
 ![](https://res.cloudinary.com/dq0w2rtm9/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1681817836/Screen_Shot_2023-04-18_at_14.36.00_ms2thb.jpg?_s=public-apps)
 
-
 ## Auth
 
 It possible to add a static api token auth by specifying `auth_token`
@@ -154,6 +154,14 @@ or
 
 ```python
 app:FastAPI = create_service("examples.ex1:chain", auth_token="api-secret-value")
+```
+
+## Custom API KEYs
+
+```shell
+POST http://0.0.0.0:3000/examples.ex6/run
+X-LLM-API-KEY: sk-******
+Content-Type: application/json
 ```
 
 ## Handling memory
@@ -181,7 +189,9 @@ app:FastAPI = create_service("examples.ex1:chain", auth_token="api-secret-value"
 }
 
 ```
+
 Response:
+
 ```json
 {
   "output": " The brain is an organ in the human body that is responsible for controlling thought, memory, emotion, and behavior. It is composed of billions of neurons that communicate with each other through electrical and chemical signals. It is the most complex organ in the body and is responsible for all of our conscious and unconscious actions.",
@@ -218,6 +228,7 @@ Response:
   ]
 }
 ```
+
 ## Documentation
 
 For more detailed information on how to use LangCorn, including advanced features and customization options, please refer to the official documentation.

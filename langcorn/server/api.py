@@ -1,8 +1,8 @@
 import os
 import sys
-from typing import Any, Dict, List, Union
+from typing import Any
 
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.security.utils import get_authorization_scheme_param
 from langchain.schema import messages_from_dict, messages_to_dict
 from loguru import logger
@@ -25,7 +25,7 @@ class LangRequest(BaseModel):
 
 class MemoryData(BaseModel):
     content: str
-    additional_kwargs: Dict[str, Any]
+    additional_kwargs: dict[str, Any]
 
 
 class Memory(BaseModel):
@@ -72,21 +72,37 @@ def derive_class(name, fields, add_memory=False):
     return type(f"Lang{name}", (BaseModel,), {"__annotations__": annotations})
 
 
+def set_openai_key(new_key: str) -> str:
+    if not new_key:
+        return
+    import openai
+
+    prev = openai.api_key
+    openai.api_key = new_key
+    return prev
+
+
 def make_handler(request_cls, chain):
-    async def handler(
-        request: request_cls,
-    ):
-        run_params = request.dict()
-        memory = run_params.pop("memory", [])
-        if chain.memory and memory and memory[0]:
-            chain.memory.chat_memory.messages = messages_from_dict(memory)
-        output = chain.run(run_params)
-        # add error handling
-        memory = (
-            []
-            if not chain.memory
-            else messages_to_dict(chain.memory.chat_memory.messages)
-        )
+    async def handler(request: request_cls, http_request: Request):
+        llm_api_key = http_request.headers.get("x-llm-api-key")
+        try:
+            api_key = set_openai_key(llm_api_key)
+            run_params = request.dict()
+            memory = run_params.pop("memory", [])
+            if chain.memory and memory and memory[0]:
+                chain.memory.chat_memory.messages = messages_from_dict(memory)
+            output = chain.run(run_params)
+
+            # add error handling
+            memory = (
+                []
+                if not chain.memory
+                else messages_to_dict(chain.memory.chat_memory.messages)
+            )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=dict(error=str(e)))
+        finally:
+            set_openai_key(api_key)
         return LangResponse(output=output, error="", memory=memory)
 
     return handler

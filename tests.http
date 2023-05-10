@@ -1,0 +1,27 @@
+###
+
+POST http://0.0.0.0:3000/examples.ex6/run
+Content-Type: application/json
+
+{
+  "history": "string",
+  "input": "string",
+  "memory": [
+    {}
+  ]
+}
+
+
+###
+
+POST http://0.0.0.0:3000/examples.ex6/run
+X-LLM-API-KEY: sk-invalid-key
+Content-Type: application/json
+
+{
+  "history": "string",
+  "input": "string",
+  "memory": [
+    {}
+  ]
+}
