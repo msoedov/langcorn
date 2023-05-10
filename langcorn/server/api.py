@@ -1,8 +1,10 @@
 import os
 import sys
+from typing import Any, Dict, List, Union
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.security.utils import get_authorization_scheme_param
+from langchain.schema import messages_from_dict, messages_to_dict
 from loguru import logger
 from pydantic import BaseModel
 from uvicorn.importer import import_from_string
@@ -21,9 +23,20 @@ class LangRequest(BaseModel):
     prompt: str
 
 
+class MemoryData(BaseModel):
+    content: str
+    additional_kwargs: Dict[str, Any]
+
+
+class Memory(BaseModel):
+    type: str
+    data: MemoryData
+
+
 class LangResponse(BaseModel):
     output: str
     error: str
+    memory: list[Memory]
 
 
 def authenticate_or_401(auth_token):
@@ -52,19 +65,29 @@ def derive_fields(language_app) -> (list[str], list[str]):
     return [language_app.input_key], ["output"]
 
 
-def derive_class(name, fields):
-    return type(
-        f"Lang{name}", (BaseModel,), {"__annotations__": {f: str for f in fields}}
-    )
+def derive_class(name, fields, add_memory=False):
+    annotations = {f: str for f in fields}
+    if add_memory:
+        annotations["memory"] = list[dict]
+    return type(f"Lang{name}", (BaseModel,), {"__annotations__": annotations})
 
 
 def make_handler(request_cls, chain):
     async def handler(
         request: request_cls,
     ):
-        output = chain.run(request.dict())
+        run_params = request.dict()
+        memory = run_params.pop("memory", [])
+        if chain.memory and memory and memory[0]:
+            chain.memory.chat_memory.messages = messages_from_dict(memory)
+        output = chain.run(run_params)
         # add error handling
-        return LangResponse(output=output, error="")
+        memory = (
+            []
+            if not chain.memory
+            else messages_to_dict(chain.memory.chat_memory.messages)
+        )
+        return LangResponse(output=output, error="", memory=memory)
 
     return handler
 
@@ -85,7 +108,7 @@ def create_service(*lc_apps, auth_token: str = ""):
         logger.info(f"{lang_app=}:{chain.__class__.__name__}({inn})")
         endpoint_prefix = lang_app.split(":")[0]
         cls_name = "".join([c.capitalize() for c in endpoint_prefix.split(".")])
-        request_cls = derive_class(cls_name, inn)
+        request_cls = derive_class(cls_name, inn, add_memory=chain.memory)
         logger.debug(f"{request_cls=}")
 
         endpoints.append(f"/{endpoint_prefix}/run")

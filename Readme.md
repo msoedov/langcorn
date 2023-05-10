@@ -109,6 +109,22 @@ from langcorn import create_service
 app:FastAPI = create_service("examples.ex2:chain", "examples.ex1:chain")
 ```
 
+or
+```shell
+from fastapi import FastAPI
+from langcorn import create_service
+
+app: FastAPI = create_service(
+    "examples.ex1:chain",
+    "examples.ex2:chain",
+    "examples.ex3:chain",
+    "examples.ex4:sequential_chain",
+    "examples.ex5:conversation",
+    "examples.ex6:conversation_with_summary",
+)
+
+```
+
 Run your LangCorn FastAPI server:
 
 ```shell
@@ -140,6 +156,68 @@ or
 app:FastAPI = create_service("examples.ex1:chain", auth_token="api-secret-value")
 ```
 
+## Handling memory
+
+```json
+{
+  "history": "string",
+  "input": "What is brain?",
+  "memory": [
+    {
+      "type": "human",
+      "data": {
+        "content": "What is memory?",
+        "additional_kwargs": {}
+      }
+    },
+    {
+      "type": "ai",
+      "data": {
+        "content": " Memory is the ability of the brain to store, retain, and recall information. It is the capacity to remember past experiences, facts, and events. It is also the ability to learn and remember new information.",
+        "additional_kwargs": {}
+      }
+    }
+  ]
+}
+
+```
+Response:
+```json
+{
+  "output": " The brain is an organ in the human body that is responsible for controlling thought, memory, emotion, and behavior. It is composed of billions of neurons that communicate with each other through electrical and chemical signals. It is the most complex organ in the body and is responsible for all of our conscious and unconscious actions.",
+  "error": "",
+  "memory": [
+    {
+      "type": "human",
+      "data": {
+        "content": "What is memory?",
+        "additional_kwargs": {}
+      }
+    },
+    {
+      "type": "ai",
+      "data": {
+        "content": " Memory is the ability of the brain to store, retain, and recall information. It is the capacity to remember past experiences, facts, and events. It is also the ability to learn and remember new information.",
+        "additional_kwargs": {}
+      }
+    },
+    {
+      "type": "human",
+      "data": {
+        "content": "What is brain?",
+        "additional_kwargs": {}
+      }
+    },
+    {
+      "type": "ai",
+      "data": {
+        "content": " The brain is an organ in the human body that is responsible for controlling thought, memory, emotion, and behavior. It is composed of billions of neurons that communicate with each other through electrical and chemical signals. It is the most complex organ in the body and is responsible for all of our conscious and unconscious actions.",
+        "additional_kwargs": {}
+      }
+    }
+  ]
+}
+```
 ## Documentation
 
 For more detailed information on how to use LangCorn, including advanced features and customization options, please refer to the official documentation.
