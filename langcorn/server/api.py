@@ -110,7 +110,7 @@ def make_handler(request_cls, chain):
 
 def create_service(*lc_apps, auth_token: str = "", app: FastAPI = None):
     # Make local modules discoverable
-    sys.path.append(os.path.dirname(__file__))
+    sys.path.append(os.path.dirname("."))
     logger.info("Creating service")
     app = app or FastAPI()
     endpoints = ["/docs"]
