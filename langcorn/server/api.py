@@ -116,7 +116,10 @@ def create_service(*lc_apps, auth_token: str = "", app: FastAPI = None):
     endpoints = ["/docs"]
 
     _authenticate_or_401 = Depends(authenticate_or_401(auth_token=auth_token))
-
+    if lc_apps and isinstance(import_from_string(lc_apps[0]), FastAPI):
+        raise RuntimeError(
+            "Improperly configured: FastAPI instance passed instead of LangChain interface"
+        )
     for lang_app in lc_apps:
         chain = import_from_string(lang_app)
         inn, out = derive_fields(chain)
