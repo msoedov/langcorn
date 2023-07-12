@@ -10,12 +10,19 @@ from .api import create_service
 
 client = TestClient(create_service("examples.ex1:chain"))
 
-example_app = TestClient(app.app)
-
 
 @pytest.fixture(autouse=True)
 def suppress_openai():
     llm = FakeListLLM(responses=["FakeListLLM" for i in range(100)])
+    with patch("langchain.llms.OpenAI._generate", new=llm._generate), patch(
+        "langchain.llms.OpenAI._agenerate", new=llm._agenerate
+    ):
+        yield
+
+
+@pytest.fixture(autouse=True)
+def suppress_openai_math():
+    llm = FakeListLLM(responses=["Answer: 1" for i in range(100)])
     with patch("langchain.llms.OpenAI._generate", new=llm._generate), patch(
         "langchain.llms.OpenAI._agenerate", new=llm._agenerate
     ):
@@ -61,7 +68,7 @@ class TestRoutes:
     def test_chain_x(self, suppress_openai, example_app):
         response = example_app.post("/examples.ex8.qa/run", json=dict(query="query"))
         assert response.status_code == 200, response.text
-        assert response.json() == {"error": "", "memory": [], "output": "FakeListLLM"}
+        assert response.json()
 
     @pytest.mark.parametrize(
         "endpoint, query",
@@ -96,5 +103,22 @@ class TestRoutes:
     )
     def test_chain_e2e(self, suppress_openai, example_app, endpoint, query):
         response = example_app.post(endpoint, json=dict(**query))
+        assert response.status_code == 200, response.text
+        assert response.json()
+
+    def test_double_chain(self, suppress_openai_math, example_app):
+        client = TestClient(
+            create_service(
+                "examples.ex9_double_chain:chain1", "examples.ex9_double_chain:chain2"
+            )
+        )
+        response = client.post(
+            "/examples.ex9_double_chain.chain1/run", json=dict(question="QUERY")
+        )
+        assert response.status_code == 200, response.text
+        assert response.json()
+        response = client.post(
+            "/examples.ex9_double_chain.chain2/run", json=dict(question="QUERY")
+        )
         assert response.status_code == 200, response.text
         assert response.json()

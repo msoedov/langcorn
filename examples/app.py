@@ -11,4 +11,6 @@ app: FastAPI = create_service(
     "examples.ex6:conversation_with_summary",
     "examples.ex7_agent:agent",
     "examples.ex8:qa",
+    "examples.ex9_double_chain:chain1",
+    "examples.ex9_double_chain:chain2",
 )
