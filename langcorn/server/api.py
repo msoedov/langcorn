@@ -39,6 +39,10 @@ class LangResponse(BaseModel):
     memory: list[Memory]
 
 
+class LangResponseDocuments(LangResponse):
+    source_documents: list[str]
+
+
 def authenticate_or_401(auth_token):
     if not auth_token:
         # Auth is not enabled.
@@ -85,14 +89,17 @@ def set_openai_key(new_key: str) -> str:
 def make_handler(request_cls, chain):
     async def handler(request: request_cls, http_request: Request):
         llm_api_key = http_request.headers.get("x-llm-api-key")
+        retrieval_chain = len(chain.output_keys) > 1
         try:
             api_key = set_openai_key(llm_api_key)
             run_params = request.dict()
             memory = run_params.pop("memory", [])
             if chain.memory and memory and memory[0]:
                 chain.memory.chat_memory.messages = messages_from_dict(memory)
-            output = chain.run(run_params)
-
+            if not retrieval_chain:
+                output = chain.run(run_params)
+            else:
+                output = chain(run_params)
             # add error handling
             memory = (
                 []
@@ -103,6 +110,13 @@ def make_handler(request_cls, chain):
             raise HTTPException(status_code=500, detail=dict(error=str(e)))
         finally:
             set_openai_key(api_key)
+        if retrieval_chain:
+            return LangResponseDocuments(
+                output=output.get("result"),
+                error="",
+                memory=memory,
+                source_documents=[str(t) for t in output.get("source_documents")],
+            )
         return LangResponse(output=output, error="", memory=memory)
 
     return handler

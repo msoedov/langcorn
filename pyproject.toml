@@ -9,7 +9,7 @@ maintainers = [
 repository = "https://github.com/msoedov/langcorn"
 license = "MIT"
 readme = "Readme.md"
-keywords = ["nlp", "langchain", "openai", "gpt", "fastapi"]
+keywords = ["nlp", "langchain", "openai", "gpt", "fastapi", "llm"]
 packages = [{ include = "langcorn", from = "." }]
 
 
@@ -33,6 +33,7 @@ httpx = "^0.24.1"
 pytest = "^7.4.0"
 types-requests = "^2.31.0.1"
 pre-commit = "^3.3.3"
+chromadb = "^0.3.2.6" # required for ex8.py
 
 [tool.ruff]
 line-length = 120
