@@ -1,9 +1,10 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
-from examples import app
 from fastapi.testclient import TestClient
 from langchain.llms.fake import FakeListLLM
+
+from examples import app
 
 from .api import create_service
 
