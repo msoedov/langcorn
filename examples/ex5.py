@@ -1,5 +1,5 @@
 from langchain.chains import ConversationChain
-from langchain.chat_models import ChatOpenAI
+from langchain.llms import OpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import (
     ChatPromptTemplate,
@@ -18,7 +18,7 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-llm = ChatOpenAI(temperature=0)
+llm = OpenAI(temperature=0)
 memory = ConversationBufferMemory(return_messages=True)
 conversation = ConversationChain(memory=memory, prompt=prompt, llm=llm)
 
