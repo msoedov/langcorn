@@ -125,7 +125,7 @@ def create_service(*lc_apps, auth_token: str = "", app: FastAPI = None):
         inn, out = derive_fields(chain)
         logger.debug(f"inputs:{inn=}")
         logger.info(f"{lang_app=}:{chain.__class__.__name__}({inn})")
-        endpoint_prefix = lang_app.split(":")[0]
+        endpoint_prefix = lang_app.replace(":", '.')
         cls_name = "".join([c.capitalize() for c in endpoint_prefix.split(".")])
         request_cls = derive_class(cls_name, inn, add_memory=chain.memory)
         logger.debug(f"{request_cls=}")
