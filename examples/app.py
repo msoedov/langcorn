@@ -13,4 +13,5 @@ app: FastAPI = create_service(
     "examples.ex8:qa",
     "examples.ex9_double_chain:chain1",
     "examples.ex9_double_chain:chain2",
+    "examples.ex10_cc:chain",
 )
