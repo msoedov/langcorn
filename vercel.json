@@ -3,7 +3,7 @@
     "builds": [
         {
             "src": "examples/app.py",
-            "use": "@devjin8/vercel-poetry@latest"
+            "use": "@vercel/python"
         }
     ],
     "routes": [
