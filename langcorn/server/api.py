@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import Any
+from typing import Any, Union
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.security.utils import get_authorization_scheme_param
@@ -34,7 +34,7 @@ class Memory(BaseModel):
 
 
 class LangResponse(BaseModel):
-    output: str
+    output: Union[str, dict[str, str]]
     error: str
     memory: list[Memory]
 
@@ -112,10 +112,10 @@ def make_handler(request_cls, chain):
             set_openai_key(api_key)
         if retrieval_chain:
             return LangResponseDocuments(
-                output=output.get("result"),
+                output=output.get("result", output),
                 error="",
                 memory=memory,
-                source_documents=[str(t) for t in output.get("source_documents")],
+                source_documents=[str(t) for t in output.get("source_documents", [])],
             )
         return LangResponse(output=output, error="", memory=memory)
 
