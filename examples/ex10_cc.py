@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 from langchain.callbacks.manager import CallbackManagerForChainRun
 from langchain.chains.base import Chain
@@ -10,19 +10,19 @@ class CustomChain(Chain):
 
     def _call(
         self,
-        inputs: Dict[str, Any],
+        inputs: dict[str, Any],
         run_manager: Optional[CallbackManagerForChainRun] = None,
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         print("input:", inputs)
         return {self.output_key: "Hello", "other": "test"}
 
     @property
-    def input_keys(self) -> List[str]:
+    def input_keys(self) -> list[str]:
         return [self.input_key]
 
     @property
-    def output_keys(self) -> List[str]:
-        """:meta private:"""
+    def output_keys(self) -> list[str]:
+        """Meta private."""
         return [self.output_key, "other"]
 
 
