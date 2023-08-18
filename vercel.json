@@ -1,5 +1,5 @@
 {
-    "devCommand": "uvicorn examples.vercel:app --host 0.0.0.0 --port 3000",
+    "devCommand": "uvicorn vercel:app --host 0.0.0.0 --port 3000",
     "builds": [
         {
             "src": "examples/app.py",
