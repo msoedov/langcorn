@@ -25,8 +25,8 @@ vercel_app: FastAPI = create_service(
     "examples.ex4:sequential_chain",
     "examples.ex5:conversation",
     "examples.ex6:conversation_with_summary",
-    "examples.ex7_agent:agent",
-    "examples.ex9_double_chain:chain1",
-    "examples.ex9_double_chain:chain2",
-    "examples.ex10_cc:chain",
+    # "examples.ex7_agent:agent",
+    # "examples.ex9_double_chain:chain1",
+    # "examples.ex9_double_chain:chain2",
+    # "examples.ex10_cc:chain",
 )
