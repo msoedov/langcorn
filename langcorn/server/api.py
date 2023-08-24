@@ -2,7 +2,7 @@ import os
 import sys
 from typing import Any, Union
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Request
 from fastapi.security.utils import get_authorization_scheme_param
 from langchain.schema import messages_from_dict, messages_to_dict
 from loguru import logger
@@ -122,7 +122,7 @@ def make_handler(request_cls, chain):
     return handler
 
 
-def create_service(*lc_apps, auth_token: str = "", app: FastAPI = None):
+def create_service(*lc_apps, auth_token: str = "", app: FastAPI or APIRouter = None):
     # Make local modules discoverable
     sys.path.append(os.path.dirname("."))
     logger.info("Creating service")
