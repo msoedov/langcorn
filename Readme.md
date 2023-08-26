@@ -230,6 +230,19 @@ Response:
 }
 ```
 
+## LLM kwargs
+
+To override the default LLM params per request
+
+```shell
+POST http://0.0.0.0:3000/examples.ex1/run
+X-LLM-API-KEY: sk-******
+X-LLM-TEMPERATURE: 0.7
+X-MAX-TOKENS: 256
+X-MODEL-NAME: gpt5
+Content-Type: application/json
+```
+
 ## Documentation
 
 For more detailed information on how to use LangCorn, including advanced features and customization options, please refer to the official documentation.
