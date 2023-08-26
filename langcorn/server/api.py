@@ -86,12 +86,41 @@ def set_openai_key(new_key: str) -> str:
     return prev
 
 
+def extract_llm_kwargs(http_headers: dict[str, str]) -> dict[str, Any]:
+    llm_kwargs = {}
+    if "x-llm-temperature" in http_headers:
+        llm_kwargs["temperature"] = float(http_headers["x-llm-temperature"])
+    if "x-max-tokens" in http_headers:
+        llm_kwargs["max_tokens"] = int(http_headers["x-max-tokens"])
+    if "x-model-name" in http_headers:
+        llm_kwargs["model_name"] = http_headers["x-model-name"]
+    return llm_kwargs
+
+
+def configure_llm(chain, http_headers: dict[str, str]):
+    llm_kwargs = extract_llm_kwargs(http_headers)
+    if not llm_kwargs:
+        return
+    # TODO: refactor to type switch
+    if hasattr(chain, "llm_chain"):
+        return configure_llm(chain.llm_chain, http_headers)
+    elif hasattr(chain, "llm_kwargs"):
+        chain.llm_kwargs = llm_kwargs
+        return True
+    elif hasattr(chain, "llm"):
+        for k, v in llm_kwargs.items():
+            setattr(chain.llm, k, v)
+        return True
+    return False
+
+
 def make_handler(request_cls, chain):
     async def handler(request: request_cls, http_request: Request):
         llm_api_key = http_request.headers.get("x-llm-api-key")
         retrieval_chain = len(chain.output_keys) > 1
         try:
             api_key = set_openai_key(llm_api_key)
+            configure_llm(chain, http_request.headers)
             run_params = request.dict()
             memory = run_params.pop("memory", [])
             if chain.memory and memory and memory[0]:

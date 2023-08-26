@@ -31,7 +31,10 @@ def suppress_openai_math():
 
 @pytest.fixture(autouse=True)
 def example_app():
-    yield TestClient(app.app)
+    yield TestClient(
+        app.app,
+        headers={"x-llm-temperature": "0.7", "x-max-tokens": "100", "x-random": "1"},
+    )
 
 
 @pytest.fixture(
