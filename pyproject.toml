@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "langcorn"
-version = "0.0.15"
+version = "0.0.16"
 description = "A Python package creating rest api interface for LangChain"
 authors = ["Alexander Miasoiedov <msoedov@gmail.com>"]
 maintainers = [
@@ -20,21 +20,21 @@ langcorn = "langcorn.__main__:entrypoint"
 python = "^3.9"
 fastapi = "^0.101.0"
 uvicorn = "^0.23.2"
-langchain = "^0.0.258"
-openai = "^0.27.8"
+langchain = "^0.0.279"
+openai = "^0.28.0"
 fire = "^0.5.0"
 loguru = "^0.7.0"
 bs4 = "0.0.1"  # required for ex4.py
-langchain-experimental = "^0.0.10"
+langchain-experimental = "^0.0.13"
 certifi = "^2023.7.22"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
 mypy = "^1.5.1"
 httpx = "^0.24.1"
-pytest = "^7.4.0"
+pytest = "^7.4.1"
 types-requests = "^2.31.0.1"
-pre-commit = "^3.3.3"
+pre-commit = "^3.4.0"
 chromadb = "^0.3.2.6" # required for ex8.py
 
 [tool.ruff]
