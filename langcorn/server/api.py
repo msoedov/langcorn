@@ -1,5 +1,6 @@
 import os
 import sys
+import types
 from typing import Any, Union
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
@@ -59,6 +60,21 @@ def authenticate_or_401(auth_token):
         raise HTTPException(status_code=401, detail="Token verification failed")
 
     return verify_auth
+
+
+class FnWrapper:
+    memory = []
+    output_key = ["output"]
+    input_variables = ["query"]
+    output_variables = "output"
+    output_keys = ["output"]
+
+    def __init__(self, fn):
+        self.fn = fn
+
+    def run(self, prompt: str):
+        r = self.fn(query=prompt)
+        return r.dict()
 
 
 def derive_fields(language_app) -> (list[str], list[str]):
@@ -165,6 +181,8 @@ def create_service(*lc_apps, auth_token: str = "", app: FastAPI = None):
         )
     for lang_app in lc_apps:
         chain = import_from_string(lang_app)
+        if isinstance(chain, types.FunctionType):
+            chain = FnWrapper(chain)
         inn, out = derive_fields(chain)
         logger.debug(f"inputs:{inn=}")
         logger.info(f"{lang_app=}:{chain.__class__.__name__}({inn})")
