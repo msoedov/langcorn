@@ -6,6 +6,7 @@ LangCorn is an API server that enables you to serve LangChain models and pipelin
 <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/msoedov/langcorn" />
 <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/msoedov/langcorn" />
 <img alt="" src="https://img.shields.io/github/repo-size/msoedov/langcorn" />
+<img alt="Downloads" src="https://static.pepy.tech/badge/langcorn" />
 <img alt="GitHub Issues" src="https://img.shields.io/github/issues/msoedov/langcorn" />
 <img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/msoedov/langcorn" />
 <img alt="Github License" src="https://img.shields.io/github/license/msoedov/langcorn" />
