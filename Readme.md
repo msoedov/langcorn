@@ -244,6 +244,25 @@ X-MODEL-NAME: gpt5
 Content-Type: application/json
 ```
 
+
+## Custom run function
+See ex12.py
+```python
+
+chain = LLMChain(llm=llm, prompt=prompt, verbose=True)
+
+
+# Run the chain only specifying the input variable.
+
+
+def run(query: str) -> Joke:
+    output = chain.run(query)
+    return parser.parse(output)
+
+app: FastAPI = create_service("examples.ex12:run")
+
+```
+
 ## Documentation
 
 For more detailed information on how to use LangCorn, including advanced features and customization options, please refer to the official documentation.
