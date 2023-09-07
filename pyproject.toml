@@ -20,12 +20,12 @@ langcorn = "langcorn.__main__:entrypoint"
 python = "^3.9"
 fastapi = "^0.101.0"
 uvicorn = "^0.23.2"
-langchain = "^0.0.279"
+langchain = "^0.0.283"
 openai = "^0.28.0"
 fire = "^0.5.0"
 loguru = "^0.7.0"
 bs4 = "0.0.1"  # required for ex4.py
-langchain-experimental = "^0.0.13"
+langchain-experimental = "^0.0.14"
 certifi = "^2023.7.22"
 
 [tool.poetry.group.dev.dependencies]
