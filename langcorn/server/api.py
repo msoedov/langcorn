@@ -5,10 +5,13 @@ from typing import Any, Union
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.security.utils import get_authorization_scheme_param
+from langchain.callbacks import get_openai_callback
 from langchain.schema import messages_from_dict, messages_to_dict
 from loguru import logger
 from pydantic import BaseModel
 from uvicorn.importer import import_from_string
+
+TRACK_USAGE = True
 
 # TODO: improve logging
 logger.remove(0)
@@ -141,10 +144,14 @@ def make_handler(request_cls, chain):
             memory = run_params.pop("memory", [])
             if chain.memory and memory and memory[0]:
                 chain.memory.chat_memory.messages = messages_from_dict(memory)
-            if not retrieval_chain:
-                output = chain.run(run_params)
-            else:
-                output = chain(run_params)
+            with get_openai_callback() as cb:
+                if not retrieval_chain:
+                    output = chain.run(run_params)
+                else:
+                    output = chain(run_params)
+                if TRACK_USAGE:
+                    print(cb)
+
             # add error handling
             memory = (
                 []

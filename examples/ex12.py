@@ -1,7 +1,5 @@
-from typing import List
-
 from langchain import LLMChain, PromptTemplate
-from langchain.llms import HuggingFacePipeline, OpenAI
+from langchain.llms import OpenAI
 from langchain.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field, validator
 
