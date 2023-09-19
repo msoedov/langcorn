@@ -16,4 +16,5 @@ app: FastAPI = create_service(
     "examples.ex10_cc:chain",
     "examples.ex12:run",
     "examples.ex13:chain",
+    "examples.ex14:chain",
 )
