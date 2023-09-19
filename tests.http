@@ -25,3 +25,20 @@ Content-Type: application/json
     {}
   ]
 }
+
+###
+
+POST http://0.0.0.0:8718/examples.ex14.chain/run
+X-LLM-API-KEY: sk-invalid-key
+Content-Type: application/json
+
+{
+  "chat_history": [[
+    "string",
+    "string"
+  ]],
+  "question": "string",
+  "memory": [
+    {}
+  ]
+}

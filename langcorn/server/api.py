@@ -85,6 +85,8 @@ def derive_fields(language_app) -> (list[str], list[str]):
         return language_app.input_variables, language_app.output_variables
     elif hasattr(language_app, "prompt"):
         return language_app.prompt.input_variables, [language_app.output_key]
+    elif hasattr(language_app, "input_keys"):
+        return language_app.input_keys, [language_app.output_key]
     return [language_app.input_key], ["output"]
 
 
@@ -92,6 +94,8 @@ def derive_class(name, fields, add_memory=False):
     annotations = {f: str for f in fields}
     if add_memory:
         annotations["memory"] = list[dict]
+    if "chat_history" in annotations:
+        annotations["chat_history"] = list[list[str]]
     return type(f"Lang{name}", (BaseModel,), {"__annotations__": annotations})
 
 
@@ -133,6 +137,11 @@ def configure_llm(chain, http_headers: dict[str, str]):
     return False
 
 
+def add_chat_history(run_params):
+    if "chat_history" in run_params:
+        run_params["chat_history"] = [tuple(t) for t in run_params["chat_history"]]
+
+
 def make_handler(request_cls, chain):
     async def handler(request: request_cls, http_request: Request):
         llm_api_key = http_request.headers.get("x-llm-api-key")
@@ -144,6 +153,7 @@ def make_handler(request_cls, chain):
             memory = run_params.pop("memory", [])
             if chain.memory and memory and memory[0]:
                 chain.memory.chat_memory.messages = messages_from_dict(memory)
+            add_chat_history(run_params)
             with get_openai_callback() as cb:
                 if not retrieval_chain:
                     output = chain.run(run_params)
