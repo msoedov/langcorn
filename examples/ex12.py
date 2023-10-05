@@ -1,6 +1,7 @@
-from langchain import LLMChain, PromptTemplate
+from langchain.chains import LLMChain
 from langchain.llms import OpenAI
 from langchain.output_parsers import PydanticOutputParser
+from langchain.prompts import PromptTemplate
 from pydantic import BaseModel, Field, validator
 
 

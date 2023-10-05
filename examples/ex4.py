@@ -1,8 +1,8 @@
 import os
 
-from langchain import PromptTemplate
 from langchain.chains import LLMChain, LLMRequestsChain, SequentialChain
 from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
 
 os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY", "sk-********")
 

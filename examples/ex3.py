@@ -1,6 +1,7 @@
 import os
 
-from langchain import LLMMathChain, OpenAI
+from langchain.chains import LLMMathChain
+from langchain.llms import OpenAI
 
 os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY", "sk-********")
 

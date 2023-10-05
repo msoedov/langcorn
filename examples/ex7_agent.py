@@ -1,5 +1,5 @@
-from langchain import LLMMathChain
 from langchain.agents.tools import Tool
+from langchain.chains import LLMMathChain
 from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
 from langchain_experimental.plan_and_execute import (
