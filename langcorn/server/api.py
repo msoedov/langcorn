@@ -6,6 +6,7 @@ from typing import Any, Union
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.security.utils import get_authorization_scheme_param
 from langchain.callbacks import get_openai_callback
+from langchain.chains.base import Chain
 from langchain.schema import messages_from_dict, messages_to_dict
 from loguru import logger
 from pydantic import BaseModel
@@ -80,17 +81,29 @@ class FnWrapper:
         return r.dict()
 
 
-def derive_fields(language_app) -> (list[str], list[str]):
+def _derive_output(language_app: Chain) -> list[str]:
+    match language_app:
+        case Chain(output_variables=output_variables):
+            return output_variables
+        case Chain(output_keys=output_keys):
+            return output_keys
+        case Chain(output_key=output_key):
+            return [language_app.output_key]
+        case _:
+            return ["output"]
+
+
+def derive_fields(language_app: Chain) -> (list[str], list[str]):
     if hasattr(language_app, "input_variables"):
         return language_app.input_variables, language_app.output_variables
     elif hasattr(language_app, "prompt"):
-        return language_app.prompt.input_variables, [language_app.output_key]
+        return language_app.prompt.input_variables, _derive_output(language_app)
     elif hasattr(language_app, "input_keys"):
-        return language_app.input_keys, [language_app.output_key]
+        return language_app.input_keys, _derive_output(language_app)
     return [language_app.input_key], ["output"]
 
 
-def derive_class(name, fields, add_memory=False):
+def derive_class(name, fields, add_memory=False) -> BaseModel:
     annotations = {f: str for f in fields}
     if add_memory:
         annotations["memory"] = list[dict]

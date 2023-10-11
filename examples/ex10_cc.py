@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from langchain.callbacks.manager import CallbackManagerForChainRun
 from langchain.chains.base import Chain
@@ -11,7 +11,7 @@ class CustomChain(Chain):
     def _call(
         self,
         inputs: dict[str, Any],
-        run_manager: Optional[CallbackManagerForChainRun] = None,
+        run_manager: CallbackManagerForChainRun | None = None,
     ) -> dict[str, str]:
         print("input:", inputs)
         return {self.output_key: "Hello", "other": "test"}
