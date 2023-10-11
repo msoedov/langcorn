@@ -88,7 +88,7 @@ def _derive_output(language_app: Chain) -> list[str]:
         case Chain(output_keys=output_keys):
             return output_keys
         case Chain(output_key=output_key):
-            return [language_app.output_key]
+            return [output_key]
         case _:
             return ["output"]
 
