@@ -5,12 +5,24 @@ from typing import Any, Union
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.security.utils import get_authorization_scheme_param
-from langchain.callbacks import get_openai_callback
 from langchain.schema import messages_from_dict, messages_to_dict
 from langchain.chains.base import Chain
 from loguru import logger
 from pydantic import BaseModel
 from uvicorn.importer import import_from_string
+
+if sys.version_info < (3, 10):
+    # Broken in 3.9: https://github.com/msoedov/langcorn/actions/runs/6773166265/job/18407381002
+    class get_openai_callback:
+        def __enter__(self):
+            return
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            return
+
+else:
+    from langchain.callbacks import get_openai_callback
+
 
 TRACK_USAGE = True
 
