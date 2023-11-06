@@ -18,19 +18,19 @@ langcorn = "langcorn.__main__:entrypoint"
 python = "^3.9"
 fastapi = "^0.104.1"
 uvicorn = "^0.23.2"
-langchain = "^0.0.327"
+langchain = "^0.0.331"
 openai = "^0.28.1"
 fire = "^0.5.0"
 loguru = "^0.7.2"
 bs4 = "0.0.1"                      # required for ex4.py
-langchain-experimental = "^0.0.36"
+langchain-experimental = "^0.0.37"
 certifi = "^2023.7.22"
 numexpr = "^2.8.7"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.10.1"
 mypy = "^1.6.1"
-httpx = "^0.25.0"
+httpx = "^0.25.1"
 pytest = "^7.4.3"
 pre-commit = "^3.5.0"
 chromadb = "^0.3.2.6" # required for ex8.py
