@@ -137,6 +137,22 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 
 Now, your LangChain models and pipelines are accessible via the LangCorn API server.
 
+With a router : 
+```python
+app = FastAPI()
+router = APIRouter()
+
+
+@app.get("/")
+def read_main():
+    return {"message": "Hello World from main app"}
+    
+router: APIRouter = create_service(router,
+    "api.ex1:chain",
+)
+app.include_router(router)
+```
+
 ## Docs
 
 Automatically served FastAPI doc
