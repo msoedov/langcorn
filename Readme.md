@@ -92,6 +92,8 @@ INFO:     Uvicorn running on http://127.0.0.1:8718 (Press CTRL+C to quit)
 
 Import the necessary packages and create your FastAPI app:
 
+In `main.py`,
+
 ```python
 
 from fastapi import FastAPI
