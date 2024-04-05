@@ -29,7 +29,7 @@ numexpr = "^2.8.7"
 pydantic = "^1.10.13"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.10.1"
+black = ">=23.10.1,<25.0.0"
 mypy = "^1.6.1"
 httpx = "^0.25.1"
 pytest = "^7.4.3"
