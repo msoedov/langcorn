@@ -16,7 +16,7 @@ langcorn = "langcorn.__main__:entrypoint"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.104.1"
+fastapi = ">=0.104.1,<0.110.0"
 uvicorn = "^0.23.2"
 langchain = "^0.0.331"
 openai = "^0.28.1"
