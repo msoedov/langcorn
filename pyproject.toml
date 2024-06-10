@@ -32,7 +32,7 @@ pydantic = "^1.10.13"
 black = ">=23.10.1,<25.0.0"
 mypy = "^1.6.1"
 httpx = "^0.25.1"
-pytest = "^7.4.3"
+pytest = ">=7.4.3,<9.0.0"
 pre-commit = "^3.5.0"
 chromadb = "^0.3.2.6" # required for ex8.py
 
