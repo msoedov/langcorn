@@ -24,7 +24,7 @@ fire = "^0.5.0"
 loguru = "^0.7.2"
 bs4 = "0.0.1"                      # required for ex4.py
 langchain-experimental = "^0.0.37"
-certifi = "^2023.7.22"
+certifi = ">=2023.7.22,<2025.0.0"
 numexpr = "^2.8.7"
 pydantic = "^1.10.13"
 
